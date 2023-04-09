@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Character.cs" />
+    <Compile Include="Assets\Scripts\Constants.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ViralCollapse\Art\_etc\Shaders\Acid.shader" />

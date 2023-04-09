@@ -1,18 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public int MoveSpeed = 6;
+    public CharacterController CharacterController;
+    public Animator GunAnimator;
+
+    private void Update()
     {
-        
+        this.Move();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Move()
     {
-        
+        var v = Input.GetAxis(Constants.Vertical);
+        var h = Input.GetAxis(Constants.Horizontal);
+
+        if (v != 0 || h != 0)
+        {
+            var direction = new Vector3(-v, 0, h);
+
+            CharacterController.SimpleMove(direction * MoveSpeed);
+
+            GunAnimator.SetBool(Constants.IsWalk, true);
+        }
+        else
+        {
+            GunAnimator.SetBool(Constants.IsWalk, false);
+        }
     }
 }
