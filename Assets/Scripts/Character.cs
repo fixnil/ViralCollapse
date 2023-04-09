@@ -73,6 +73,12 @@ public class Character : MonoBehaviour
                 effect.SetActive(true);
 
                 Destroy(effect, 2);
+
+                if (hitInfo.transform.CompareTag(Constants.Enemy))
+                {
+                    var enemy = hitInfo.transform.GetComponent<Enemy>();
+                    enemy.Hit(hitInfo.point);
+                }
             }
         }
     }
