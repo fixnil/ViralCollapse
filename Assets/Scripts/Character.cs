@@ -3,12 +3,17 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     public int MoveSpeed = 6;
-    public CharacterController CharacterController;
+    public int MouseSensitivity = 5;
+
     public Animator GunAnimator;
+    public CharacterController CharacterController;
+
+    public Vector2 RotationTemp = new(0, -90);
 
     private void Update()
     {
         this.Move();
+        this.Rotate();
     }
 
     private void Move()
@@ -28,5 +33,18 @@ public class Character : MonoBehaviour
         {
             GunAnimator.SetBool(Constants.IsWalk, false);
         }
+    }
+
+    private void Rotate()
+    {
+        var mouseX = Input.GetAxis(Constants.MouseX);
+        var mouseY = Input.GetAxis(Constants.MouseY);
+
+        RotationTemp.x -= mouseY * MouseSensitivity;
+        RotationTemp.y += mouseX * MouseSensitivity;
+
+        RotationTemp.x = Mathf.Clamp(RotationTemp.x, -45, 30);
+
+        this.transform.rotation = Quaternion.Euler(RotationTemp.x, RotationTemp.y, 0);
     }
 }
