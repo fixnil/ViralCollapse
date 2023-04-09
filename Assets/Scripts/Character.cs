@@ -3,10 +3,16 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     public int MoveSpeed = 6;
+    public int ShootDistance = 100;
     public int MouseSensitivity = 5;
 
     public Animator GunAnimator;
     public CharacterController CharacterController;
+
+    public Transform ShootPoint;
+    public GameObject ShootHitEffect;
+    public AudioClip ShootAudioClip;
+    public AudioSource ShootAudioSource;
 
     public Vector2 RotationTemp = new(0, -90);
 
@@ -14,6 +20,7 @@ public class Character : MonoBehaviour
     {
         this.Move();
         this.Rotate();
+        this.Fire();
     }
 
     private void Move()
@@ -46,5 +53,27 @@ public class Character : MonoBehaviour
         RotationTemp.x = Mathf.Clamp(RotationTemp.x, -45, 30);
 
         this.transform.rotation = Quaternion.Euler(RotationTemp.x, RotationTemp.y, 0);
+    }
+
+    private void Fire()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            GunAnimator.SetTrigger(Constants.IsFire);
+
+            if (Physics.Raycast(ShootPoint.position, ShootPoint.forward, out var hitInfo, ShootDistance))
+            {
+                ShootAudioSource.PlayOneShot(ShootAudioClip);
+
+                var effect = Instantiate(ShootHitEffect);
+
+                effect.transform.position = hitInfo.point;
+                effect.transform.forward = hitInfo.normal;
+
+                effect.SetActive(true);
+
+                Destroy(effect, 2);
+            }
+        }
     }
 }
