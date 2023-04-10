@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    public int MoveSpeed = 6;
+    public int MoveSpeed = 600;
     public int ShootDistance = 100;
     public int MouseSensitivity = 5;
 
@@ -14,7 +14,7 @@ public class Character : MonoBehaviour
     public AudioClip ShootAudioClip;
     public AudioSource ShootAudioSource;
 
-    public Vector2 RotationTemp = new(0, -90);
+    private Vector2 _rotationTemp = new(0, -90);
 
     private void Update()
     {
@@ -49,12 +49,12 @@ public class Character : MonoBehaviour
         var mouseX = Input.GetAxis(Constants.MouseX);
         var mouseY = Input.GetAxis(Constants.MouseY);
 
-        RotationTemp.x -= mouseY * MouseSensitivity;
-        RotationTemp.y += mouseX * MouseSensitivity;
+        _rotationTemp.x -= mouseY * MouseSensitivity;
+        _rotationTemp.y += mouseX * MouseSensitivity;
 
-        RotationTemp.x = Mathf.Clamp(RotationTemp.x, -45, 30);
+        _rotationTemp.x = Mathf.Clamp(_rotationTemp.x, -45, 30);
 
-        this.transform.rotation = Quaternion.Euler(RotationTemp.x, RotationTemp.y, 0);
+        this.transform.rotation = Quaternion.Euler(_rotationTemp.x, _rotationTemp.y, 0);
     }
 
     private void Fire()
