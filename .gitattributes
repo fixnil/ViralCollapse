@@ -63,3 +63,4 @@
 #*.RTF   diff=astextplain
 
 *.shader linguist-vendored
+*.rtf linguist-vendored
