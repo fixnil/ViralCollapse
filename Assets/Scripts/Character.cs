@@ -25,14 +25,16 @@ public class Character : MonoBehaviour
 
     private void Move()
     {
-        var v = Input.GetAxis(Constants.Vertical);
         var h = Input.GetAxis(Constants.Horizontal);
+        var v = Input.GetAxis(Constants.Vertical);
 
-        if (v != 0 || h != 0)
+        if (h != 0 || v != 0)
         {
-            var direction = new Vector3(-v, 0, h);
+            var direction = new Vector3(h, 0, v);
 
-            CharacterController.SimpleMove(direction * MoveSpeed);
+            direction = this.transform.TransformDirection(direction);
+
+            CharacterController.SimpleMove(direction * MoveSpeed * Time.deltaTime);
 
             GunAnimator.SetBool(Constants.IsWalk, true);
         }
