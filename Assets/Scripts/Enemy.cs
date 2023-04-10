@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
     {
         var effect = Instantiate(DieEffect);
         effect.transform.position = hitPoint;
+        effect.transform.forward = this.transform.forward;
         effect.transform.rotation = Quaternion.identity;
 
         effect.SetActive(true);

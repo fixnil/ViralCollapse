@@ -76,9 +76,8 @@ public class Character : MonoBehaviour
 
                 Destroy(effect, 2);
 
-                if (hitInfo.transform.CompareTag(Constants.Enemy))
+                if (hitInfo.transform.TryGetComponent<Enemy>(out var enemy))
                 {
-                    var enemy = hitInfo.transform.GetComponent<Enemy>();
                     enemy.Hit(hitInfo.point);
                 }
             }
