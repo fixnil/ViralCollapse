@@ -18,9 +18,12 @@ public class Character : MonoBehaviour
 
     private void Update()
     {
-        this.Move();
-        this.Rotate();
-        this.Fire();
+        if (!Dashboard.Instance.IsGameOver)
+        {
+            this.Move();
+            this.Rotate();
+            this.Fire();
+        }
     }
 
     private void Move()
@@ -59,7 +62,7 @@ public class Character : MonoBehaviour
 
     private void Fire()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             GunAnimator.SetTrigger(Constants.IsFire);
 
@@ -79,6 +82,8 @@ public class Character : MonoBehaviour
                 if (hitInfo.transform.TryGetComponent<Enemy>(out var enemy))
                 {
                     enemy.Hit(hitInfo.point);
+
+                    Dashboard.Instance.Score++;
                 }
             }
         }
