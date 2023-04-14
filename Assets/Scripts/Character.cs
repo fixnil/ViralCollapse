@@ -37,7 +37,7 @@ public class Character : MonoBehaviour
 
             direction = this.transform.TransformDirection(direction);
 
-            CharacterController.SimpleMove(direction * MoveSpeed * Time.deltaTime);
+            CharacterController.SimpleMove(MoveSpeed * Time.deltaTime * direction);
 
             GunAnimator.SetBool(Constants.IsWalk, true);
         }
